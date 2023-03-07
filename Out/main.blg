@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99d (TeX Live 2021)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: ./Out/main.aux
+The style file: plainnat.bst
+Database file #1: ref.bib
+Warning--empty journal in jiangmirror
+Warning--empty year in jiangmirror
+Warning--empty year in jiangmirror
+You've used 8 entries,
+            2773 wiz_defined-function locations,
+            629 strings with 6055 characters,
+and the built_in function-call counts, 3731 in all, are:
+= -- 311
+> -- 265
+< -- 3
++ -- 89
+- -- 81
+* -- 299
+:= -- 592
+add.period$ -- 24
+call.type$ -- 8
+change.case$ -- 51
+chr.to.int$ -- 8
+cite$ -- 19
+duplicate$ -- 173
+empty$ -- 273
+format.name$ -- 91
+if$ -- 766
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 8
+newline$ -- 47
+num.names$ -- 32
+pop$ -- 112
+preamble$ -- 1
+purify$ -- 43
+quote$ -- 0
+skip$ -- 137
+stack$ -- 0
+substring$ -- 56
+swap$ -- 19
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 88
+warning$ -- 3
+while$ -- 27
+width$ -- 0
+write$ -- 102
+(There were 3 warnings)

@@ -1,0 +1,53 @@
+\section{Symmetric and Smoothing Vector Field}
+\subsection{Riemannian LD in dual space}
+Recall that the SDE of Mirror-Langevin Dynamics is
+\begin{align}
+	\dr \yb_t = -\nabla_\xb V(\xb_t) \dr t + \sqrt{2}\nabla^2\phi(\xb)^{1/2}\dr \mathbf{B}_t, 
+\end{align}
+which equals Riemannian Langevin dynamics in dual space
+\begin{align}
+	\dr \yb_t = \left(-\nabla^2\phi^*(\yb_t)^{-1}\nabla_\yb W(\yb_t) + \nabla\cdot\nabla^2\phi^*(\yb_t)^{-1}\right)\dr t + \sqrt{2}\nabla^2\phi^*(\yb_t)^{-1/2}\dr \mathbf{B}_t.
+\end{align}
+And the corresponding PDE is 
+\begin{align}
+	\partial_t \nu_t + \nabla\cdot (\nu_t (\nabla^2\phi^*)^{-1}\nabla\log(\frac{\varpi}{\nu_t})) = 0.
+\end{align}
+\begin{proof}
+\begin{align}
+	\nabla^2\phi(\xb_t)^{1/2} = \nabla^2\phi^*(\yb_t)^{-1/2}
+\end{align}
+\begin{align*}
+	e^{-W(\yb)} = & e^{-V(\nabla\phi^*(\yb))}\det(\nabla^2\phi^*(\yb)) \\
+	-\nabla_\yb W(\yb) = & - \nabla_\yb V(\nabla\phi^*(\yb)) + \nabla_\yb \log\det(\nabla^2\phi^*(\yb)) \\ 
+		= & - \nabla^2\phi^*(\yb)\nabla_\xb V(\xb) + \nabla_\yb \log\det(\nabla^2\phi^*(\yb)) \\ 
+	-\nabla^2\phi^*(\yb)\nabla_\xb V(\xb) = & -\nabla_\yb W(\yb) -  \nabla_\yb \log\det(\nabla^2\phi^*(\yb)) \\ 
+	-\nabla_\xb V(\xb) = & -\nabla^2\phi^*(\yb)^{-1} \nabla_\yb W(\yb) - \nabla^2\phi^*(\yb)^{-1}\nabla_\yb \log\det(\nabla^2\phi^*(\yb))
+\end{align*}
+Now we need to proof $-\nabla^2\phi^*(\yb)^{-1}\nabla_\yb \log\det(\nabla^2\phi^*(\yb)) = \nabla_\yb\cdot\nabla^2\phi^*(\yb)^{-1}$. 
+For the $k$-th dimensional, we have 
+\begin{align*}
+	&\left[\nabla_\yb\log\det(\nabla^2\phi^*(\yb))\right]_k + \left[\nabla^2\phi^*(\yb)\nabla_\yb\cdot\nabla^2\phi^*(\yb)^{-1}\right]_k\\
+	= & \sum_{a=1}^d\sum_{b=1}^d \nabla_{y_a}\nabla^2\phi^*(\yb)_{kb}\left[\nabla^2\phi^*(\yb)^{-1}\right]_{ba} + \sum_{a=1}^d\sum_{b=1}^d\nabla^2\phi^*(\yb)_{kb}\nabla_{y_a}\left[\nabla^2\phi^*(\yb)^{-1}\right]_{ba} \\ 
+	= & \sum_{a=1}^d \nabla_{y_a}\left(\sum_{b=1}^d \nabla^2\phi^*(\yb)_{kb}\left[\nabla^2\phi^*(\yb)^{-1}\right]_{ba}\right)\\ 
+	= & \sum_{a=1}^d\nabla_{y_a}\mathbf{I}_{ka} = 0
+\end{align*}
+
+\end{proof}
+\subsection{Smoothing vector field with kernel function}
+Consider the following PDE
+\begin{align}
+	\partial_t \nu_t + \nabla\cdot (\nu_t \nabla\log(\frac{\varpi}{\nu_t})) = 0, 
+\end{align}
+which can be solved via the following ODE
+\begin{align*}
+	\dr \yb_t = & \left[\nabla_{\yb}\log(\varpi(\yb_t)) - \nabla_{\yb}\log(\nu_t(\yb_t))\right] \dr t \\
+	 	= & \nabla^2\phi(\xb_t)^{-1}\left[\nabla_{\xb}\log(\pi(\xb_t)) - \nabla_{\xb}\log(\mu_t(\xb_t))\right]\dr t.
+\end{align*}
+Smoothing $\nabla^2\phi(\xb_t)^{-1}\left[\nabla_{\xb}\log(\pi(\xb_t)) - \nabla_{\xb}\log(\mu_t(\xb_t))\right]$: 
+\begin{align*}
+	& \int{k(\xb',\xb)\nabla^2\phi(\xb')^{-1}\left[\nabla_{\xb}\log(\pi(\xb_t)) - \nabla_{\xb}\log(\mu_t(\xb_t))\right]\dr \mu_t} \\ 
+	= & \mathbb{E}_{\xb'\sim\mu_t}\left[k(\xb',\xb)\nabla^2\phi(\xb')^{-1}\nabla\log(\pi(\xb'))\right] - \int{k(\xb',\xb)\nabla^2\phi(\xb')^{-1}\nabla\log(\mu_t(\xb'))\dr \mu_t} \\ 
+	= & \mathbb{E}_{\xb'\sim\mu_t}\left[k(\xb',\xb)\nabla^2\phi(\xb')^{-1}\nabla\log(\pi(\xb'))\right] + \int{\nabla\cdot\left(k(\xb',\xb)\nabla^2\phi(\xb')^{-1}\right)\mu_t(\xb')\dr \xb'}\\
+	= & \mathbb{E}_{\xb'\sim\mu_t}\left[k(\xb',\xb)\nabla^2\phi(\xb')^{-1}\nabla\log(\pi(\xb')) + \nabla\cdot\left(k(\xb',\xb)\nabla^2\phi(\xb')^{-1}\right) \right], 
+\end{align*}
+which equals the update direction of Mirrored Stein Variational Gradient Descent.

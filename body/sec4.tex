@@ -1,0 +1,34 @@
+\section{Mirror ParVI with KL}
+Consider the following PDE
+\begin{align}
+	\partial_t \nu_t + \nabla\cdot (\nu_t (\nabla^2\phi^*)^{-1} \nabla\log(\frac{\varpi}{\nu_t})) = 0, 
+\end{align}
+which can be solved via the following ODE
+\begin{align}
+	\dr \yb_t = \nabla^2\phi^*(\yb_t)^{-1}\left[\nabla_{\yb}\log(\varpi(\yb_t)) - \nabla_{\yb}\log(\nu_t(\yb_t))\right]\dr t.
+\end{align}
+We have 
+\begin{align*}
+	&\nabla^2\phi^*(\yb_t)^{-1}\left[\nabla_{\yb}\log(\varpi(\yb_t)) - \nabla_{\yb}\log(\nu_t(\yb_t))\right] \\ 
+	= & \nabla^2\phi^*(\yb_t)^{-1}\left[\nabla_{\yb}\log(\pi(\nabla\phi^*(\yb_t))) + \nabla_{\yb}\log\det(\nabla^2\phi^*(\yb_t)) - \nabla_{\yb}\log(\mu_t(\nabla\phi^*(\yb_t)))\right. \\ & \left. - \nabla_{\yb}\log\det(\nabla^2\phi^*(\yb_t))\right] \\ 
+	= & \nabla^2\phi^*(\yb_t)^{-1}\nabla^2\phi^*(\yb_t)\left[\nabla_{\xb}\log(\pi(\xb_t)) - \nabla_{\xb}\log(\mu_t(\xb_t))\right]\\
+	= & \nabla_{\xb}\log(\pi(\xb_t)) - \nabla_{\xb}\log(\mu_t(\xb_t))
+\end{align*}
+Thus, we have 
+\begin{align}\label{mirror_functional_descent}
+	\dr \yb_t = \left(\nabla_{\xb}\log(\pi(\xb_t)) - \nabla_{\xb}\log(\mu_t(\xb_t))\right)\dr t
+\end{align}
+
+\subsection{Mirror Functional Descent with Smoothing in Dual Space}
+We find that updating particles with smoothed \eqref{mirror_functional_descent} performs poorly when the mode of target distribution lies at the boundary, which be blamed for the contradictory between constrained support and the unconstrained kernel function in the primal space. 
+Thus, we investigate kernel functions defined on the constrained domain (such as a simplex), or perform smoothing in the dual space.
+
+We have the following results
+\begin{align*}
+	\dr \yb_t  & = \nabla^2\phi^*(\yb_t)^{-1}\left[\nabla_{\yb}\log(\varpi(\yb_t)) - \nabla_{\yb}\log(\nu_t(\yb_t))\right]\dr t, \\
+    & = \nabla^2\phi^*(\yb_t)^{-1}\left[\nabla^2\phi(\xb_t)^{-1}\left(
+        \nabla_{\xb}\log(\pi(\xb_t)) - \nabla_\xb\log\det(\nabla^2\phi(\xb))\right) - \nabla_{\yb}\log(\nu_t(\yb_t))\right] \\ 
+    & = \left[\nabla_{\xb}\log(\pi(\xb_t)) - \nabla_\xb\log\det(\nabla^2\phi(\xb)) - \nabla^2\phi^*(\yb_t)^{-1}\nabla_\yb\log(\nu_t(\yb_t)) 
+	\right]\dr t, 
+\end{align*}
+which can be directly smoothed with kernel functions in the dual space.

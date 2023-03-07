@@ -1,0 +1,30 @@
+\section{Notations}
+\paragraph{Target distribution and potential function.}
+\begin{itemize}
+	\item Target distribution and potential function in primal space: $\pi(\xb) \propto\exp(-V(\xb))$.
+	\item Target distribution and potential function in dual space: $\varpi(\yb) \propto \exp(-W(\yb))$.
+	\item $\xb$ is on a $d$-dimensional simplex $\Delta_d := \{\xb\in\mathbb{R}^d|\sum_i^d x_i\leq 1, x_i\geq 0\}$, and $\yb \in \mathbb{R}^d$.
+\end{itemize}
+
+\paragraph{Mirror map, take the entropy function as an example.}
+\begin{itemize}
+	\item Entropic mirror map: $\phi(\xb) = \sum_i^d x_i\log(x_i) + (1 - \sum_i^d x_i)\log(1 - \sum_i^d x_i)$.
+	\item The convex conjugate of $\phi(\xb)$: $\phi^*(\yb) = \sup_{\xb \in \Delta_d} \yb^T\xb - \phi(\xb) = \log(1+\sum_i^d e^{y_i})$.
+	\item Map $\xb\to\yb$: $\nabla \phi(\xb) = \log(\xb) - \log(1 - \sum_i^d x_i)\mathbf{1}$.
+	\item Map $\yb\to\xb$: $\nabla \phi^*(\yb) = e^{\yb} / (1 + \sum_i^d e^{y_i})$.
+	\item $\nabla \phi$ is a bijection from $\Delta_d$ to $\mathbb{R}^d$ with inverse map $(\nabla\phi)^{-1}=\nabla\phi^*$.
+	\item $\nabla^2\phi(\xb) = \text{diag}(1/\xb) + \mathbf{1}\mathbf{1}^T / (1 - \sum_i^d x_i)$.
+	\item $\nabla^2\phi(\xb)^{-1} = \text{diag}(\xb) - \xb\xb^T$.
+	\item $\log\det(\nabla^2\phi(\xb)) = -\log\left(1 - \sum_{i=1}^d x_i\right) - \sum_{i=1}^d\log(x_i)$.
+	\item $\log\det(\nabla^2\phi^*(\yb)) = \sum_{i=1}^d y_i - (d + 1)\phi^*(\yb)$.
+\end{itemize}
+
+\paragraph{Relation between $\pi$ and $\varpi$ \cite{hsieh2018mirrored}.}
+\begin{itemize}
+	\item The gradient map $\nabla\phi$ induces a new probability measure $\dr\varpi:=e^{-W(\yb)}\dr\yb$ through $\varpi(E) = \pi(\nabla\phi^{-1}(E))$ for every Borel set $E$ on $\mathbb{R}^d$. We say that $\varpi$ is a push-forward measure of $\pi$ under $\nabla\phi$. 
+	\item The potential functions have the following relation
+	\begin{align}
+		e^{-V(\xb)} = & e^{-W(\nabla\phi(\xb))}\det(\nabla^2\phi(\xb)), \\
+		e^{-W(\yb)} = & e^{-V(\nabla\phi^*(\yb))}\det(\nabla^2\phi^*(\yb)).
+	\end{align}
+\end{itemize}

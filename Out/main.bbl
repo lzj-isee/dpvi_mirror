@@ -1,0 +1,52 @@
+\begin{thebibliography}{8}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Ahn and Chewi(2020)]{ahn2020efficient}
+Kwangjun Ahn and Sinho Chewi.
+\newblock Efficient constrained sampling via the mirror-langevin algorithm.
+\newblock \emph{arXiv preprint arXiv:2010.16212}, 2020.
+
+\bibitem[Chewi et~al.(2020)Chewi, Gouic, Lu, Maunu, Rigollet, and
+  Stromme]{chewi2020exponential}
+Sinho Chewi, Thibaut~Le Gouic, Chen Lu, Tyler Maunu, Philippe Rigollet, and
+  Austin~J Stromme.
+\newblock Exponential ergodicity of mirror-langevin diffusions.
+\newblock \emph{arXiv preprint arXiv:2005.09669}, 2020.
+
+\bibitem[Hsieh et~al.(2018)Hsieh, Kavis, Rolland, and
+  Cevher]{hsieh2018mirrored}
+Ya-Ping Hsieh, Ali Kavis, Paul Rolland, and Volkan Cevher.
+\newblock Mirrored langevin dynamics.
+\newblock \emph{arXiv preprint arXiv:1802.10174}, 2018.
+
+\bibitem[Jiang()]{jiangmirror}
+Qijia Jiang.
+\newblock Mirror langevin monte carlo: the case under isoperimetry.
+
+\bibitem[Li et~al.(2021)Li, Tao, Vempala, and Wibisono]{li2021mirror}
+Ruilin Li, Molei Tao, Santosh~S Vempala, and Andre Wibisono.
+\newblock The mirror langevin algorithm converges with vanishing bias.
+\newblock \emph{arXiv preprint arXiv:2109.12077}, 2021.
+
+\bibitem[Ma et~al.(2015)Ma, Chen, and Fox]{ma2015complete}
+Yi-An Ma, Tianqi Chen, and Emily~B Fox.
+\newblock A complete recipe for stochastic gradient mcmc.
+\newblock \emph{arXiv preprint arXiv:1506.04696}, 2015.
+
+\bibitem[Shi et~al.(2021)Shi, Liu, and Mackey]{shi2021sampling}
+Jiaxin Shi, Chang Liu, and Lester Mackey.
+\newblock Sampling with mirrored stein operators.
+\newblock \emph{arXiv preprint arXiv:2106.12506}, 2021.
+
+\bibitem[Zhang et~al.(2020)Zhang, Peyr{\'e}, Fadili, and
+  Pereyra]{zhang2020wasserstein}
+Kelvin~Shuangjian Zhang, Gabriel Peyr{\'e}, Jalal Fadili, and Marcelo Pereyra.
+\newblock Wasserstein control of mirror langevin monte carlo.
+\newblock In \emph{Conference on Learning Theory}, pages 3814--3841. PMLR,
+  2020.
+
+\end{thebibliography}

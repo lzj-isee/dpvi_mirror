@@ -1,0 +1,113 @@
+\section{Existing Algorithms}
+\subsection{Langevin dynamics}
+\begin{align}
+	\dr \xb_t = -\nabla_\xb V(\xb_t) \dr t + \sqrt{2}\dr \mathbf{B}_t.
+\end{align}
+Denote the evolutionary distribution as $\mu_t$, the corresponding PDE is defined as 
+\begin{align}
+	\partial_t\mu_t + \nabla\cdot(\mu_t \nabla\log(\frac{\pi}{\mu_t})) = 0.
+\end{align}
+
+\subsection{Riemannian Langevin Dynamics} 
+\begin{align}\label{riemannian_ld}
+	\dr \xb_t = \left( -G(\xb_t)^{-1}\nabla_{\xb}V(\xb_t) + \nabla\cdot G(\xb_t)^{-1} \right)\dr t + \sqrt{2}G(\xb_t)^{-1/2}\dr \mathbf{B}_t, 
+\end{align}
+where $G$ is the Riemannian metric tensor. The corresponding PDE is defined as \cite{ma2015complete}
+\begin{align}
+	\partial_t \mu_t + \nabla\cdot (\mu_t G^{-1}\nabla\log(\frac{\pi}{\mu_t})) = 0.
+\end{align}
+
+\subsection{Mirror-Langevin Dynamics}
+\cite{zhang2020wasserstein,ahn2020efficient,chewi2020exponential,jiangmirror,li2021mirror}
+\begin{align}\label{mirror_ld}
+	\left\{
+	\begin{aligned}
+		\dr \yb_t = & -\nabla_\xb V(\xb_t) \dr t + \sqrt{2}\nabla^2\phi(\xb)^{1/2}\dr \mathbf{B}_t, \\
+		\xb_t =& \nabla\phi^*(\yb_t).
+	\end{aligned}
+	\right.
+\end{align}
+\emph{The Riemannian Langevin Dynamics \eqref{riemannian_ld} yields the mirror-Langevin Dynamics \eqref{mirror_ld} with $G = \nabla^2\phi$.}
+The corresponding PDE has the following form \cite{chewi2020exponential}
+\begin{align}
+	\partial_t \mu_t + \nabla\cdot (\mu_t (\nabla^2\phi)^{-1}\nabla\log(\frac{\pi}{\mu_t})) = 0.
+\end{align}
+
+\subsection{Mirrored Langevin Dynamics}
+\cite{hsieh2018mirrored}
+\begin{align}\label{mirrored_ld}
+	\left\{
+		\begin{aligned}
+			\dr \yb_t = & -\nabla_\yb W(\yb_t)\dr t + \sqrt{2}\dr \mathbf{B}_t, \\
+			\xb_t = & \nabla\phi^*(\yb_t).
+		\end{aligned}
+	\right.
+\end{align}
+Denote the evolutionary distribution in the dual space as $\nu_t$, the corresponding PDE in the dual space is defined as
+\begin{align}
+	\partial_t \nu_t + \nabla\cdot (\nu_t \nabla\log(\frac{\varpi}{\nu_t})) = 0.
+\end{align}
+
+\subsection{Mirrored Stein Operator}
+\cite{shi2021sampling} derives the following mirrored Stein operator from the generator of the mirror-Langevin dynamics 
+\begin{align}\label{mirrored_stein_operator}
+	(\mathcal{M}_{\pi,\phi}g)(\xb) = g(\xb)^T\nabla^2\phi(\xb)^{-1}\nabla\log(\pi(\xb)) + \nabla\cdot(\nabla^2\phi(\xb)^{-1}g(\xb)), 
+\end{align}
+where $g$ is a vector-valued function.
+The dissipation with mirrored Stein operator \eqref{mirrored_stein_operator} ({\bfseries NOTE: no direct proof})
+\begin{align}
+	\frac{\dr}{\dr t}\text{KL}(\mu_t||\pi) = -\mathbb{E}_{\mu_t}\left[(\mathcal{M}_{\pi,\phi}g_t)(\cdot)\right].
+\end{align}
+The optimal $g_t$ is 
+\begin{align}
+	g_t = \mathbb{E}_{\xb_t\sim\mu_t}\left[(\mathcal{M}_{\pi,\phi}K(\cdot, \xb_t))(\cdot)\right], 
+\end{align}
+where $\mathcal{M}_{\pi,\phi}K(\cdot, \xb_t)$ applies $\mathcal{M}_{\pi,\phi}$ to each row of the matrix-valued function $K_\xb = K(\cdot, \xb)$.
+The proposed dynamics is defined as 
+\begin{align}
+	\left\{
+		\begin{aligned}
+			\dr \yb_t = &g_t(\xb_t)\dr t, \\
+			\xb_t = & \nabla\phi^*(\yb_t)
+		\end{aligned}
+	\right.
+\end{align}
+
+\subsection{Mirrored Stein Variational Gradient Descent}
+\begin{align}\label{mirrored_svgd_general}
+	\left\{
+		\begin{aligned}
+			\dr \yb_t = &  \mathbb{E}_{\xb'\sim\mu_t}\left[K(\xb_t,\xb')\nabla^2\phi(\xb')^{-1}\nabla\log(\pi(\xb'))+\nabla_{\xb'}\cdot(K(\xb_t,\xb')\nabla^2\phi(\xb')^{-1})\right]  \dr t, \\ 
+			\xb_t = & \nabla\phi^*(\yb_t),
+		\end{aligned}
+	\right.
+\end{align}
+where $K(\xb_t,\xb') = k(\xb_t, \xb')\mathbf{I}$. 
+
+With kernel $k_\phi(\yb_t, \yb') = k(\nabla\phi^*(\yb_t), \nabla\phi^*(\yb'))$ \eqref{mirrored_svgd_general} equals (MSVGD-with-primal-kernel) 
+\begin{align}\label{mirrored_svgd_primal}
+	\left\{
+		\begin{aligned}
+			\dr \yb_t = &  \mathbb{E}_{\yb'\sim\nu_t}\left[k_\phi(\yb_t,\yb')\nabla\log(\varpi(\yb'))+\nabla_{\yb'}k_\phi(\yb',\yb_t)\right]  \dr t, \\ 
+			\xb_t = & \nabla\phi^*(\yb_t),\\
+			\nabla_{\yb'}k_\phi(\yb',\yb_t) = &\nabla^2\phi^*(\yb')\nabla_{\xb'}k(\xb',\xb_t) = \nabla^2\phi(\xb')^{-1}\nabla_{\xb'}k(\xb',\xb_t)
+		\end{aligned}
+	\right.
+\end{align}
+
+Replace the kernel $k_\phi(\yb', \yb_t)$ with $k(\yb', \yb_t)$, based on \eqref{mirrored_svgd_primal}, we have (MSVGD-with-dual-kernel)
+\begin{align}\label{mirrored_svgd_dual}
+	\left\{
+		\begin{aligned}
+			\dr \yb_t = &  \mathbb{E}_{\yb'\sim\nu_t}\left[k(\yb_t,\yb')\nabla\log(\varpi(\yb'))+\nabla_{\yb'}k(\yb',\yb_t)\right]  \dr t, \\ 
+			\xb_t = & \nabla\phi^*(\yb_t), 
+		\end{aligned}
+	\right.
+\end{align}
+which is related to the Mirrored Langevin Dynamics \eqref{mirrored_ld}.
+
+\subsection{Stein Variational Mirror Descent}
+Matrix kernel
+\begin{align}
+	K_{\phi,t}(\xb_1, \xb_2) = \mathbb{E}_{\xb_t\sim\mu_t}\left[k^{1/2}(\xb_1,\xb_t)\nabla^2\phi(\xb_t)k^{1/2}(\xb_t,\xb_2)\right].
+\end{align}
