@@ -1,7 +1,7 @@
 import torch, os, numpy as np, ot, matplotlib.pyplot as plt, utils, easydict
 from typing import Optional, Union
 
-class dirichletMulti(object):
+class dirichletUniform(object):
     def __init__(self, opts, dataset_info:dict = None) -> None:
         self.opts = opts
         self.device = opts.device
@@ -10,7 +10,7 @@ class dirichletMulti(object):
         # generate the target distribution and reference samples in primal space
         self.dirichlet_param = torch.Tensor([1.0, 1.0, 1.0]).to(self.device)
         self.target_distribution = torch.distributions.dirichlet.Dirichlet(self.dirichlet_param)
-        self.reference_primal = self.target_distribution.sample(sample_shape = torch.Size([opts.reference_num])).to(self.device)
+        self.reference_primal = self.target_distribution.sample(sample_shape = torch.Size([opts.reference_num])).to(self.device)[:, :-1]
         self.reference_dual = self.mirror_map.nabla_psi(self.reference_primal)
         # set the structure of records
         self.records = easydict.EasyDict(
@@ -25,7 +25,7 @@ class dirichletMulti(object):
     @torch.no_grad()
     def init_particles(self):
         init_distribution = torch.distributions.dirichlet.Dirichlet(torch.ones(3) * 16)
-        self.init_support_primal = init_distribution.sample(sample_shape = torch.Size([self.opts.particle_num])).to(self.device)
+        self.init_support_primal = init_distribution.sample(sample_shape = torch.Size([self.opts.particle_num])).to(self.device)[:, :-1]
         self.init_support_dual = self.mirror_map.nabla_psi(self.init_support_primal)
         self.init_mass_primal = torch.ones(len(self.init_support_primal), device = self.device)
         self.init_mass_primal /= self.init_mass_primal.sum()

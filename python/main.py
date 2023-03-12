@@ -63,7 +63,7 @@ if __name__ == "__main__":
     parser.add_argument('--config_path', default = './configs/default.yaml', help = 'the path of yaml config file')
     parser.add_argument('--over_writen', action = 'store_true', help = 'if true, the args of argparser will overwrite the args of config-file')
     parser.add_argument('--algorithm', type = str, default = 'MSVGDd', help = 'the name of algorithm')
-    parser.add_argument('--task', type = str, default = 'dirichletSingle', help = 'the name of task')
+    parser.add_argument('--task', type = str, default = 'dirichletMulti', help = 'the name of task')
 
     parser.add_argument('--particle_num', type = int, default = 256)
     parser.add_argument('--lr', type = float, default = 0.2)
