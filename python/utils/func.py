@@ -17,6 +17,9 @@ def calculate_w2(supportA: torch.Tensor, massA: torch.Tensor, supportB: torch.Te
     if __debug__ and ((not isinstance(supportA, torch.Tensor)) or (not isinstance(massA, torch.Tensor)) or (not isinstance(supportB, torch.Tensor)) or (not isinstance(massB, torch.Tensor))):
         raise RuntimeError('input should be of type torch.Tensor')
     
+    massA = massA / massA.sum()
+    massB = massB / massB.sum()
+    
     cost_matrix = torch.cdist(supportA, supportB, p = 2).pow(2)
     trans_plan = ot.emd(massA, massB, cost_matrix)
     result = (trans_plan * cost_matrix).sum().sqrt().item()

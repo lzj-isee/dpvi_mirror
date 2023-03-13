@@ -1,5 +1,11 @@
 import torch
 
+def safe_log(x):
+    return torch.log(torch.maximum(torch.ones_like(x) * 1e-32, x))
+
+def safe_reciprocal(x):
+    return torch.reciprocal(torch.maximum(x, torch.ones_like(x) * 1e-32))
+
 def psi_star(inputs: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     """
     convex conjuate of entropic fucntion
@@ -19,12 +25,13 @@ def psi_star(inputs: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     result = torch.log(1 + inputs.exp().sum(1, keepdim = keepdim))
     return result
 
-def nabla_psi(inputs: torch.Tensor) -> torch.Tensor: 
+def nabla_psi(inputs: torch.Tensor, safe_mode:bool = False) -> torch.Tensor: 
     """
     mirror map from primal to dual
 
     Args:
         inputs (Tensor): mini-batch tensor of shape (B x D), primal space
+        safe_mode (bool): avoid inf while calculating torch.log
 
     Returns:
         result (Tensor): tensor of shape (B x D)
@@ -34,7 +41,10 @@ def nabla_psi(inputs: torch.Tensor) -> torch.Tensor:
     if __debug__ and len(inputs.shape) != 2:
         raise ValueError('the shape of inputs should be (B x D)')
     
-    result = torch.log(inputs) - torch.log(1 - torch.sum(inputs, dim = 1, keepdim = True))
+    if not safe_mode:
+        result = torch.log(inputs) - torch.log(1 - torch.sum(inputs, dim = 1, keepdim = True))
+    else:
+        result = safe_log(inputs) - safe_log(1 - torch.sum(inputs, dim = 1, keepdim = True))
     # result = torch.log(inputs / (1 - torch.sum(inputs, dim = 1, keepdim = True)))
     return result
 

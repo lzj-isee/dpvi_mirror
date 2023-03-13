@@ -11,7 +11,7 @@ class dirichletMulti(object):
         self.dirichlet_param = torch.Tensor([0.1, 0.1, 0.1]).to(self.device)
         self.target_distribution = torch.distributions.dirichlet.Dirichlet(self.dirichlet_param)
         self.reference_primal = self.target_distribution.sample(sample_shape = torch.Size([opts.reference_num])).to(self.device)[:, :-1]
-        self.reference_dual = self.mirror_map.nabla_psi(self.reference_primal.double()).float()
+        self.reference_dual = self.mirror_map.nabla_psi(self.reference_primal, safe_mode = True)
         # set the structure of records
         self.records = easydict.EasyDict(
             {
