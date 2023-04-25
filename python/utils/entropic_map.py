@@ -204,7 +204,7 @@ def logdet_nabla2_psi(inputs: torch.Tensor) -> torch.Tensor:
     if __debug__ and len(inputs.shape) != 2:
         raise ValueError('the shape of inputs should be (B x D)')
     
-    results = inputs.log().sum(dim = 1) - (1 - inputs.sum(dim = 1)).log()
+    results = - inputs.log().sum(dim = 1) - (1 - inputs.sum(dim = 1)).log()
     return results
 
 def nabla_logdet_nabla2_psi(inputs: torch.Tensor) -> torch.Tensor:
